@@ -664,3 +664,9 @@ main{counter-reset:secn}
   .stat{padding:16px}
   .stat .stat-v{font-size:23px}
 }
+/* v7 fix: scroll containers (elevation face-navigator, material & schedule
+   tables) must be allowed to shrink below their content width so they scroll
+   INTERNALLY instead of forcing page-wide horizontal overflow on mobile. */
+.workbench,.workbench>*{min-width:0}
+.face-list{min-width:0}
+.tbl-panel,.tbl-scroll{min-width:0}
