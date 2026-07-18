@@ -511,3 +511,58 @@ footer{margin-top:clamp(56px,9vh,96px);border-top:1px solid var(--line)}
   .rail-stats{grid-template-columns:repeat(2,1fr)}
   .hero-cta .btn{flex:1 1 auto;justify-content:center}
 }
+
+/* =====================================================================
+   v4 refinement — 精致建筑事务所 (warm paper · serif display · hairline
+   tables · restrained terracotta). Appended override layer; wins by order.
+   ===================================================================== */
+:root{
+  --bg:#F5F1EA;                 /* warm paper */
+  --panel:#FCFAF6;
+  --panel-2:#F1ECE2;
+  --ink:#1B1712;                /* warm ink */
+  --ink-2:#746C61;              /* warm muted */
+  --line:#E5DFD2;
+  --line-2:#EEE9DF;
+  --red:#A8462F;
+  --red-deep:#8A3626;
+  --steel:#6E7883;
+  --sans:"Inter",-apple-system,"Segoe UI",system-ui,Roboto,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --serif:"Fraunces","Inter",Georgia,"Times New Roman",serif;
+  --r-panel:16px;
+  --r-ctl:9px;
+  --shadow-panel:0 1px 2px rgba(50,38,24,.035), 0 16px 36px -22px rgba(50,38,24,.16);
+}
+body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+/* display serif for large type; CJK glyphs fall through to --sans per-glyph */
+.hero-title{font-family:var(--serif);font-weight:480;letter-spacing:-.012em;line-height:1.04}
+.sec-head h2{font-family:var(--serif);font-weight:480;letter-spacing:-.006em}
+.fm-title h3,.dv-name{font-family:var(--serif);font-weight:500}
+.hero-doc .hd-zh{font-weight:500}
+
+/* kickers / captions: quieter, wider tracking */
+.kicker,.hero-kicker,.rail-cap{font-size:11px;letter-spacing:.2em;color:var(--ink-2)}
+
+/* nav / accents */
+.nav{background:rgba(245,241,234,.8);border-bottom-color:rgba(27,23,18,.08)}
+.hero-accent,.nav-links a.active::after,.face-item.active .fi-bar{background:var(--red)}
+
+/* panels, controls: warm hairline + softer float */
+.panel{border-color:var(--line);box-shadow:var(--shadow-panel)}
+.btn-secondary{border-color:var(--line)}
+.btn-secondary:hover{border-color:var(--ink)}
+.seg{background:#EBE5DA;border-color:var(--line)}
+.stat:hover,.face-item:hover{background:var(--panel-2)}
+.stat .stat-v{font-size:clamp(26px,3vw,34px);letter-spacing:-.02em}
+
+/* hairline schedule + material tables (.spec) */
+.tbl-panel{padding:22px}
+table.spec{font-size:13px}
+table.spec caption{color:var(--ink);font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:2px 0 12px;border-bottom:1.5px solid var(--ink);margin-bottom:2px}
+table.spec th{background:transparent;color:var(--ink-2);font-weight:500;font-size:10.5px;
+  letter-spacing:.07em;text-transform:uppercase;padding:11px 14px;border-bottom:1px solid var(--line)}
+table.spec td{padding:11px 14px;border-bottom:1px solid var(--line-2)}
+table.spec tbody tr:hover{background:rgba(168,70,47,.035)}
+table.spec tr.total td{border-top:1.5px solid var(--ink);border-bottom:0;font-weight:600;color:var(--ink)}
