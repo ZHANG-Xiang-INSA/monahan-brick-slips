@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3 Monahan Avenue (HA23007) — 砖片深化施工文档 Brick Slip Construction Documentation</title>
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<nav class="topnav" id="topnav">
+  <div class="nav-inner">
+    <a class="brand" href="#hero">HA23007 <span>砖片深化 Brick Slips</span></a>
+    <div class="nav-links">
+      <a href="#hero">整体模型 <em>Model</em></a>
+      <a href="#black" class="nav-black">黑砖 <em>Black</em></a>
+      <a href="#red" class="nav-red">红砖 <em>Red</em></a>
+      <a href="#clips" class="nav-clip">钢卡扣 <em>Clips</em></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ SECTION 1 : HERO / 3D ============ -->
+<section id="hero" class="section hero-section">
+  <header class="hero-head">
+    <p class="kicker">3 Monahan Avenue, Purley — HA23007 · 「黑角平贴」修订版 "Black corners flat" revision</p>
+    <h1>整体模型 <span class="en">Overall Model</span></h1>
+    <p class="intro">
+      转角做法：转角处不再使用一体式 L 形砖，而是采用两片平砖成对压接（每皮 215&nbsp;mm 搭接片 + 107.5&nbsp;mm 半片交替），实现平贴转角。<br>
+      <span class="en">Corner method: no one-piece L-slips — each corner is formed by flat pairs (a 215&nbsp;mm lap piece + a 107.5&nbsp;mm half piece, alternating per course), laid flat around the arris.</span>
+    </p>
+  </header>
+
+  <div class="viewer-wrap card">
+    <div id="viewer3d">
+      <div id="viewer-loading">加载三维模型… Loading 3D model…</div>
+    </div>
+    <div class="viewer-ui">
+      <label><input type="checkbox" id="tog-red" checked><span class="sw sw-red"></span>红砖 Red</label>
+      <label><input type="checkbox" id="tog-black" checked><span class="sw sw-black"></span>黑砖 Black</label>
+      <label><input type="checkbox" id="tog-clips" checked><span class="sw sw-clip"></span>卡扣 Clips</label>
+      <span class="viewer-hint">拖动旋转 · 滚轮缩放 · 右键/Shift 平移&nbsp; Drag&nbsp;=&nbsp;orbit · Wheel&nbsp;=&nbsp;zoom · Right-drag&nbsp;=&nbsp;pan</span>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat"><b>7,697</b><span>砖片总数 Total bricks</span></div>
+    <div class="stat stat-red"><b>5,964</b><span>红砖 Red bricks</span></div>
+    <div class="stat stat-black"><b>1,733</b><span>黑砖 Black bricks</span></div>
+    <div class="stat stat-clip"><b>2,215</b><span>钢卡扣 Steel clips</span></div>
+    <div class="stat stat-clip"><b>11,782</b><span>螺丝 Screws</span></div>
+    <div class="stat"><b>98.42 m²</b><span>总面积 Total area</span></div>
+  </div>
+</section>
+
+<!-- ============ SECTION 2 : BLACK ============ -->
+<section id="black" class="section black-section">
+  <header class="sec-head">
+    <h2>黑砖 <span class="en">Black Brick Slips</span></h2>
+    <p>雨棚 7 个黑砖饰面：每张图纸可点击放大；表格列出该面所有砖型（编号 / 尺寸 / 数量）。<br>
+    <span class="en">7 black canopy faces — click any drawing to enlarge; each table lists the Brick Type IDs, sizes and quantities for that face.</span></p>
+  </header>
+  <div id="black-cards" class="cards"></div>
+</section>
+
+<!-- ============ SECTION 3 : RED ============ -->
+<section id="red" class="section red-section">
+  <header class="sec-head">
+    <h2>红砖 <span class="en">Red Brick Slips</span></h2>
+    <p>4 面红砖外墙（A_NE / B_SW / C_NW / D_SE）：图纸可点击放大；「转角片」为平贴成对转角砖。<br>
+    <span class="en">The 4 red walls (A_NE / B_SW / C_NW / D_SE) — click a drawing to enlarge; “corner pieces” are the flat-pair corner bricks.</span></p>
+  </header>
+  <div id="red-cards" class="cards"></div>
+</section>
+
+<!-- ============ SECTION 4 : CLIPS ============ -->
+<section id="clips" class="section clip-section">
+  <header class="sec-head">
+    <h2>钢卡扣 <span class="en">Steel Clips</span></h2>
+    <p>每面墙的卡扣排布图与明细：卡扣类型 / 长度 / 数量 / 每扣孔数 / 螺丝数。<b>一孔一螺丝</b>。<br>
+    <span class="en">Per-face clip layout and schedule: type / length / qty / holes per clip / screws. <b>One hole&nbsp;=&nbsp;one screw.</b></span></p>
+  </header>
+  <div id="screw-banner" class="screw-banner">
+    螺丝总数 Grand screw total：<b>11,782</b> <span>（2,215 卡扣 clips × 一孔一螺丝 one screw per hole）</span>
+  </div>
+  <div id="clip-cards" class="cards"></div>
+</section>
+
+<footer class="footer">
+  <p><b>3 Monahan Avenue, Purley</b> · 项目编号 Project ref <b>HA23007</b></p>
+  <p>砖片与卡扣深化施工文档 Brick-slip &amp; clip construction documentation · 生成日期 Generated 2026-07-18</p>
+</footer>
+
+<!-- lightbox -->
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <div class="lightbox-frame">
+    <div class="lightbox-title" id="lightbox-title"></div>
+    <img id="lightbox-img" alt="">
+  </div>
+  <button class="lightbox-close" id="lightbox-close" title="关闭 Close">×</button>
+</div>
+
+<script src="data/summary.js"></script>
+<script src="data/faces.js"></script>
+<script src="data/model3d.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/viewer.js"></script>
+</body>
+</html>
