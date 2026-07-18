@@ -624,3 +624,43 @@ main{counter-reset:secn}
 .hi-head .seg--small{padding:2px}
 .hi-head .seg--small button{padding:5px 10px;font-size:12px}
 .hi-note{font-size:11px;color:var(--ink-2);line-height:1.5;margin-top:-4px}
+
+/* =====================================================================
+   v7 — mobile hardening. Prevents hero-title overflow on narrow phones,
+   wraps/compacts the 3D toolbar, densifies + horizontally-scrolls the
+   material & schedule tables, trims section/panel padding for small screens.
+   ===================================================================== */
+@media (max-width:600px){
+  .hero{min-height:auto;padding:calc(var(--nav-h) + 18px) 0 30px}
+  .hero-title{font-size:clamp(30px,8.4vw,44px);line-height:1.08;letter-spacing:-.015em}
+  .hero-doc .hd-en{font-size:12.5px}
+  .hero-index{padding:18px;gap:14px}
+  .sec{padding:clamp(38px,7vh,60px) 0 0}
+  .sec-head{margin-bottom:18px}
+  .sec-head h2{font-size:clamp(23px,6.6vw,30px)}
+  .sec-head .sec-sub{font-size:13px}
+  /* 3D overlay toolbar: wrap and compact so buttons never run off-canvas */
+  .stage-toolbar{top:10px;left:10px;right:10px;gap:8px}
+  .stage-actions{flex-wrap:wrap;justify-content:flex-end;row-gap:4px}
+  .stage-actions .btn-ghost{padding:7px 9px;font-size:12.5px}
+  .v-chk{padding:0 9px;font-size:12.5px}
+  /* tables: denser + reliable touch horizontal scroll */
+  .tbl-panel{padding:14px}
+  .tbl-scroll{-webkit-overflow-scrolling:touch}
+  table.spec{font-size:12px}
+  table.spec th{padding:9px 11px;font-size:10px}
+  table.spec td{padding:9px 11px}
+  table.spec caption{padding:0 0 10px;font-size:11px}
+  .cut-fig{height:clamp(230px,38vh,340px)}
+  .cut-body{padding:16px}
+}
+@media (max-width:400px){
+  .wrap{padding:0 15px}
+  .hero-title{font-size:27px}
+  .hero-cta{margin-top:24px;gap:10px}
+  .seg button{padding:7px 10px;font-size:12.5px}
+  .seg--small button{padding:5px 8px}
+  .hi-swatch .sw{width:30px;height:30px}
+  .stat{padding:16px}
+  .stat .stat-v{font-size:23px}
+}
