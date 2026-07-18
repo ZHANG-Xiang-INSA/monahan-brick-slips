@@ -10,15 +10,8 @@
     nav_cutting:   { zh: "切割图",     en: "Cutting" },
 
     // hero
-    hero_kicker:   { zh: "施工文档 · 砖片系统", en: "Construction Document · Brick Slip System" },
     hero_sub:      { zh: "英国珀利 · 莫纳汉大道 3 号", en: "Purley, United Kingdom" },
     hero_doc:      { zh: "砖片排布定位与工程量清单", en: "Brick Slip Setting-Out & Quantity Schedule" },
-    rev_label:     { zh: "当前修订", en: "Revision" },
-    rev_name:      { zh: "黑砖转角平贴", en: "Black Corners Flat" },
-    rev_notice:    { zh: "修订说明 — 本版变更", en: "Revision Notice — Changes in this issue" },
-    rev_item1:     { zh: "全部转角改为平贴对拼（逐皮交错压边），取消所有 L 型砖片", en: "All corners converted to flat slip pairs (staggered quoin per course); no L-slips anywhere" },
-    rev_item2:     { zh: "雨棚山墙原有空隙已全部填补", en: "Gable voids filled" },
-    rev_item3:     { zh: "灰缝统一为 10 mm 标准缝", en: "Joints normalized to 10 mm" },
     btn_explore:   { zh: "浏览三维模型", en: "Explore Model" },
     btn_elev:      { zh: "查看立面图", en: "View Elevations" },
     quick_cap:     { zh: "快速入口", en: "Quick Entry" },
@@ -108,8 +101,7 @@
 
     // misc / footer
     ph2:           { zh: "第二阶段", en: "Phase 2" },
-    foot_doc:      { zh: "砖片排布定位与工程量清单 · 第一阶段网页版", en: "Brick Slip Setting-Out & Quantity Schedule · web edition, phase 1" },
-    foot_rev:      { zh: "REV 06 — 黑砖转角平贴", en: "REV 06 — Black Corners Flat" }
+    foot_doc:      { zh: "砖片排布定位与工程量清单 · 第一阶段网页版", en: "Brick Slip Setting-Out & Quantity Schedule · web edition, phase 1" }
   };
 
   var lang = "zh";
