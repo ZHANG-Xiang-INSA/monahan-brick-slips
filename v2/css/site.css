@@ -566,3 +566,44 @@ table.spec th{background:transparent;color:var(--ink-2);font-weight:500;font-siz
 table.spec td{padding:11px 14px;border-bottom:1px solid var(--line-2)}
 table.spec tbody tr:hover{background:rgba(168,70,47,.035)}
 table.spec tr.total td{border-top:1.5px solid var(--ink);border-bottom:0;font-weight:600;color:var(--ink)}
+
+/* =====================================================================
+   v5 designer pass — hero cover composition (two-column: lead + material
+   spec card) + monograph section numbering. Fills the empty hero with
+   purposeful, on-theme designed content instead of blank space.
+   ===================================================================== */
+.hero-inner{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(300px,.82fr);
+  gap:clamp(28px,5vw,80px);align-items:center}
+.hero-lead{position:relative;min-width:0}
+@media (max-width:880px){
+  .hero-inner{grid-template-columns:1fr;gap:34px}
+  .hero-index{max-width:540px}
+}
+
+/* project-index / material-spec card (right of hero) */
+.hero-index{position:relative;z-index:1;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--r-panel);box-shadow:var(--shadow-panel);
+  padding:clamp(22px,2.3vw,30px);display:flex;flex-direction:column;gap:18px;
+  opacity:0;transform:translateY(14px);animation:hiIn .7s var(--ease) .42s forwards}
+@keyframes hiIn{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.hero-index{opacity:1;transform:none;animation:none}}
+.hi-cap{font-size:10.5px;letter-spacing:.2em;color:var(--ink-2);text-transform:uppercase}
+.hi-swatch{list-style:none;display:flex;flex-direction:column}
+.hi-swatch li{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line-2)}
+.hi-swatch li:first-child{padding-top:0}
+.hi-swatch .sw{width:34px;height:34px;border-radius:8px;background:var(--sw);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.10);flex:0 0 auto}
+.hi-swatch .hi-name{flex:1;font-size:13.5px;font-weight:500;color:var(--ink)}
+.hi-swatch .hi-q{font-size:15px;color:var(--ink)}
+.hi-figs{display:grid;grid-template-columns:repeat(3,1fr);gap:2px 14px;margin-top:-2px}
+.hi-figs dt{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2)}
+.hi-figs dd{font-size:21px;font-weight:600;margin-top:4px;letter-spacing:-.015em}
+.hi-figs dd i{font-style:normal;font-size:12px;color:var(--ink-2);margin-left:3px;font-weight:500}
+.hi-foot{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;
+  padding-top:15px;border-top:1px solid var(--ink);
+  font-size:10px;letter-spacing:.09em;color:var(--ink-2)}
+
+/* monograph section numbering — 01 · PROJECT SUMMARY … */
+main{counter-reset:secn}
+.sec{counter-increment:secn}
+.sec .sec-head .kicker::before{content:counter(secn,decimal-leading-zero) "  ·  ";color:var(--red-deep)}
