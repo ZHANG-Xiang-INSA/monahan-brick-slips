@@ -1,5 +1,6 @@
-/* Site controller — face metadata, elevation explorer, tables, hash routing,
-   cutting section, drawing-viewer catalogue, 3D wiring. */
+/* Site controller — face metadata, elevation workbench (search/filter/pan-zoom),
+   data rail, tables, hash routing, cutting section, drawing-viewer catalogue,
+   3D wiring (segmented layer presets), nav scrollspy + mobile menu, reveals. */
 (function () {
   "use strict";
 
@@ -7,28 +8,39 @@
 
   // ---------- face metadata (visible naming; internal ids stay in data) ----------
   var FACES = [
-    { code: "RED-01",   id: "A_NE",               model: "A_NE_side",            colour: "red",
-      zh: "A墙 — 东北侧立面（楼梯侧）",  en: "Wall A — NE Side Elevation (Stair Side)" },
-    { code: "RED-02",   id: "B_SW",               model: "B_SW_side",            colour: "red",
-      zh: "B墙 — 西南侧立面",            en: "Wall B — SW Side Elevation" },
-    { code: "RED-03",   id: "C_NW",               model: "C_NW_front",           colour: "red",
-      zh: "C墙 — 西北正立面（入口）",    en: "Wall C — NW Front Elevation (Entrance)" },
-    { code: "RED-04",   id: "D_SE",               model: "D_SE_garden",          colour: "red",
-      zh: "D墙 — 东南花园立面",          en: "Wall D — SE Garden Elevation" },
+    { code: "RED-01",   id: "A_NE",               model: "A_NE_side",             colour: "red",
+      zh: "A墙 — 东北侧立面（楼梯侧）",  en: "Wall A — NE Side Elevation (Stair Side)",
+      zhS: "A墙 · 东北侧",     enS: "Wall A · NE side" },
+    { code: "RED-02",   id: "B_SW",               model: "B_SW_side",             colour: "red",
+      zh: "B墙 — 西南侧立面",            en: "Wall B — SW Side Elevation",
+      zhS: "B墙 · 西南侧",     enS: "Wall B · SW side" },
+    { code: "RED-03",   id: "C_NW",               model: "C_NW_front",            colour: "red",
+      zh: "C墙 — 西北正立面（入口）",    en: "Wall C — NW Front Elevation (Entrance)",
+      zhS: "C墙 · 西北正面",   enS: "Wall C · NW front" },
+    { code: "RED-04",   id: "D_SE",               model: "D_SE_garden",           colour: "red",
+      zh: "D墙 — 东南花园立面",          en: "Wall D — SE Garden Elevation",
+      zhS: "D墙 · 东南花园",   enS: "Wall D · SE garden" },
     { code: "BLACK-01", id: "black_gable_front",  model: "black_frontframe_+360", colour: "black",
-      zh: "雨棚山墙正面",                en: "Canopy Gable Front" },
-    { code: "BLACK-02", id: "black_slope_L",      model: "black_slopeL_-4620",   colour: "black",
-      zh: "雨棚左坡面",                  en: "Canopy Slope — Left" },
-    { code: "BLACK-03", id: "black_slope_R",      model: "black_slopeR_-4620",   colour: "black",
-      zh: "雨棚右坡面",                  en: "Canopy Slope — Right" },
-    { code: "BLACK-04", id: "black_side_outer_L", model: "black_wallXn_+1720",   colour: "black",
-      zh: "雨棚外侧壁 — 左",             en: "Canopy Outer Wall — Left" },
-    { code: "BLACK-05", id: "black_side_outer_R", model: "black_wallXp_+1720",   colour: "black",
-      zh: "雨棚外侧壁 — 右",             en: "Canopy Outer Wall — Right" },
-    { code: "BLACK-06", id: "black_side_inner_L", model: "black_wallXp_-1400",   colour: "black",
-      zh: "雨棚内侧壁 — 左",             en: "Canopy Inner Wall — Left" },
-    { code: "BLACK-07", id: "black_side_inner_R", model: "black_wallXn_-1400",   colour: "black",
-      zh: "雨棚内侧壁 — 右",             en: "Canopy Inner Wall — Right" }
+      zh: "雨棚山墙正面",                en: "Canopy Gable Front",
+      zhS: "雨棚山墙正面",     enS: "Canopy gable" },
+    { code: "BLACK-02", id: "black_slope_L",      model: "black_slopeL_-4620",    colour: "black",
+      zh: "雨棚左坡面",                  en: "Canopy Slope — Left",
+      zhS: "雨棚左坡面",       enS: "Canopy slope L" },
+    { code: "BLACK-03", id: "black_slope_R",      model: "black_slopeR_-4620",    colour: "black",
+      zh: "雨棚右坡面",                  en: "Canopy Slope — Right",
+      zhS: "雨棚右坡面",       enS: "Canopy slope R" },
+    { code: "BLACK-04", id: "black_side_outer_L", model: "black_wallXn_+1720",    colour: "black",
+      zh: "雨棚外侧壁 — 左",             en: "Canopy Outer Wall — Left",
+      zhS: "雨棚外侧壁 · 左",  enS: "Outer wall L" },
+    { code: "BLACK-05", id: "black_side_outer_R", model: "black_wallXp_+1720",    colour: "black",
+      zh: "雨棚外侧壁 — 右",             en: "Canopy Outer Wall — Right",
+      zhS: "雨棚外侧壁 · 右",  enS: "Outer wall R" },
+    { code: "BLACK-06", id: "black_side_inner_L", model: "black_wallXp_-1400",    colour: "black",
+      zh: "雨棚内侧壁 — 左",             en: "Canopy Inner Wall — Left",
+      zhS: "雨棚内侧壁 · 左",  enS: "Inner wall L" },
+    { code: "BLACK-07", id: "black_side_inner_R", model: "black_wallXn_-1400",    colour: "black",
+      zh: "雨棚内侧壁 — 右",             en: "Canopy Inner Wall — Right",
+      zhS: "雨棚内侧壁 · 右",  enS: "Inner wall R" }
   ];
   // drawing sheet sizes (viewBox px) — the elevation SVGs carry no width/height
   var SVG_SIZE = {
@@ -62,8 +74,11 @@
   // ---------- state ----------
   var cur = FACES[0];          // current face (RED-01 default)
   var curLayer = "bricks";     // 'bricks' | 'clips'
+  var faceFilter = "all";      // 'all' | 'red' | 'black'
+  var faceQuery = "";
   var sort = { bricks: { col: 0, dir: 1 }, clips: { col: 0, dir: 1 } };
   var dviewer = null;
+  var stagePZ = null;
   var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // ---------- drawing-viewer catalogue ----------
@@ -83,27 +98,77 @@
     dviewer.open(list, 0);
   }
 
-  // ---------- elevation explorer ----------
+  // ---------- centre drawing stage: pan / zoom / pinch ----------
+  // (shared robust engine — window.PanZoom in drawing.js: pointer capture,
+  //  window-bound move/up, zoom-independent screen-px pan, clamped, wheel-to-cursor)
+  function StagePZ(stage, plane, img, onReady) {
+    var pz = window.PanZoom(stage, plane, { pad: 30, img: img });
+    var token = 0, lastSrc = "";
+    return {
+      load: function (src, w, h, alt) {
+        token++;
+        var my = token;
+        stage.classList.add("loading");
+        var done = function () {
+          if (my !== token) return;
+          var W = w || img.naturalWidth || 1000;
+          var H = h || img.naturalHeight || 700;
+          pz.setSize(W, H); // PanZoom owns the img layout size (crisp zoom)
+          stage.classList.remove("loading");
+          if (onReady) onReady();
+        };
+        img.alt = alt || "";
+        if (lastSrc === src) { done(); return; } // same sheet — load may not re-fire
+        lastSrc = src;
+        img.onload = done;
+        img.src = src;
+        if (img.complete) done();
+      },
+      fit: pz.fit,
+      zoom: pz.zoom
+    };
+  }
+
+  // ---------- face navigator (search + filter + list) ----------
+  function faceMatches(f) {
+    if (faceFilter !== "all" && f.colour !== faceFilter) return false;
+    if (!faceQuery) return true;
+    var q = faceQuery.toLowerCase();
+    return (f.code + " " + f.zh + " " + f.en + " " + f.zhS + " " + f.enS).toLowerCase().indexOf(q) >= 0;
+  }
   function buildFaceList() {
     var host = document.getElementById("face-list-items");
+    var zh = window.LANG() === "zh";
     host.innerHTML = "";
+    var shown = 0;
     FACES.forEach(function (f) {
+      if (!faceMatches(f)) return;
+      shown++;
       var d = faceData[f.id] || { totals: {} };
       var b = document.createElement("button");
+      b.type = "button";
       b.className = "face-item" + (f.colour === "black" ? " black" : "") + (f === cur ? " active" : "");
       b.setAttribute("data-code", f.code);
       b.innerHTML =
-        '<span class="fi-code">' + f.code + "</span>" +
-        '<span class="fi-thumb"><img loading="lazy" src="' + f.brickSvg + '" alt="' + f.code + '"></span>' +
-        '<span class="fi-zh">' + f.zh + "</span>" +
-        '<span class="fi-en">' + f.en + "</span>" +
-        '<span class="fi-stat">' + fmt(d.totals.bricks || 0) + " " + T("st_bricks") +
-        " · " + fmt(d.totals.clips || 0) + " " + T("st_clips") + "</span>";
+        '<span class="fi-bar"></span>' +
+        '<span class="fi-body">' +
+          '<span class="fi-code">' + f.code + "</span>" +
+          '<span class="fi-name">' + (zh ? f.zhS : f.enS) + "</span>" +
+          '<span class="fi-count">' + fmt(d.totals.bricks || 0) + " " + T("u_pcs") + "</span>" +
+        "</span>" +
+        '<span class="fi-thumb"><img loading="lazy" src="' + f.brickSvg + '" alt="' + f.code + '"></span>';
       b.addEventListener("click", function () { selectFace(f.code, true); });
       host.appendChild(b);
     });
+    if (!shown) {
+      var p = document.createElement("p");
+      p.className = "fl-empty";
+      p.textContent = T("fl_empty");
+      host.appendChild(p);
+    }
   }
 
+  // ---------- data rail ----------
   function renderStats() {
     var d = faceData[cur.id] || { totals: {}, bricks: [], clips: [] };
     var t = d.totals || {};
@@ -118,11 +183,12 @@
       ["st_types", fmt(typesCount), ""]
     ];
     host.innerHTML = rows.map(function (r) {
-      return '<div class="fm-stat"><div class="fs-l">' + T(r[0]) + '</div>' +
-        '<div class="fs-v">' + r[1] + (r[2] ? " <span>" + r[2] + "</span>" : "") + "</div></div>";
+      return '<div class="rs-row"><span class="rs-l">' + T(r[0]) + '</span>' +
+        '<span class="rs-v">' + r[1] + (r[2] ? "<i>" + r[2] + "</i>" : "") + "</span></div>";
     }).join("");
   }
 
+  // ---------- schedule tables ----------
   function sortRows(rows, s, numCols) {
     var r = rows.slice();
     r.sort(function (a, b) {
@@ -192,27 +258,25 @@
     }
   }
 
+  // ---------- face rendering ----------
   function renderDrawing(animate) {
-    var box = document.getElementById("fm-drawing");
-    var img = document.getElementById("fm-img");
+    var stage = document.getElementById("fm-drawing");
     var src = curLayer === "clips" ? cur.clipSvg : cur.brickSvg;
-    function swap() {
-      img.src = src;
-      img.alt = cur.code + " " + T(curLayer === "clips" ? "kind_clip" : "kind_brick");
-      box.classList.remove("out");
-    }
+    var alt = cur.code + " " + T(curLayer === "clips" ? "kind_clip" : "kind_brick");
+    function go() { stagePZ.load(src, cur.size[0], cur.size[1], alt); }
     if (animate && !reducedMotion) {
-      box.classList.add("out");
-      setTimeout(swap, 180);
-    } else swap();
+      stage.classList.add("swap");
+      setTimeout(go, 190);
+    } else go();
   }
 
   function renderFace(animate) {
+    var zh = window.LANG() === "zh";
     var title = document.getElementById("fm-title");
     title.className = "fm-title" + (cur.colour === "black" ? " black" : "");
     document.getElementById("fm-code").textContent = cur.code;
-    document.getElementById("fm-zh").textContent = cur.zh;
-    document.getElementById("fm-en").textContent = cur.en;
+    document.getElementById("fm-zh").textContent = zh ? cur.zh : cur.en;
+    document.getElementById("fm-en").textContent = zh ? cur.en : cur.zh;
     var items = document.querySelectorAll(".face-item");
     for (var i = 0; i < items.length; i++) {
       items[i].classList.toggle("active", items[i].getAttribute("data-code") === cur.code);
@@ -246,8 +310,28 @@
   document.addEventListener("DOMContentLoaded", function () {
     dviewer = window.DrawingViewer();
 
+    var fmStage = document.getElementById("fm-drawing");
+    stagePZ = StagePZ(fmStage, document.getElementById("fm-plane"),
+      document.getElementById("fm-img"),
+      function () { fmStage.classList.remove("swap"); });
+
     buildFaceList();
     renderFace(false);
+
+    // search + colour filter
+    var searchEl = document.getElementById("face-search");
+    searchEl.addEventListener("input", function () {
+      faceQuery = this.value.trim();
+      buildFaceList();
+    });
+    var flt = document.querySelectorAll("#face-filter button");
+    for (var ff = 0; ff < flt.length; ff++) {
+      flt[ff].addEventListener("click", function () {
+        faceFilter = this.getAttribute("data-f");
+        for (var j = 0; j < flt.length; j++) flt[j].classList.toggle("active", flt[j] === this);
+        buildFaceList();
+      });
+    }
 
     // segmented layer control (bricks / clips drawing)
     var segs = document.querySelectorAll("#fm-seg button");
@@ -261,19 +345,24 @@
 
     document.getElementById("fm-prev").addEventListener("click", function () { stepFace(-1); });
     document.getElementById("fm-next").addEventListener("click", function () { stepFace(1); });
-
-    var tblToggle = document.getElementById("tbl-toggle");
-    tblToggle.addEventListener("click", function () {
-      var open = document.getElementById("tbl-wrap").classList.toggle("open");
-      tblToggle.classList.toggle("open", open);
-    });
-
+    document.getElementById("fm-zin").addEventListener("click", function () { stagePZ.zoom(1.3); });
+    document.getElementById("fm-zout").addEventListener("click", function () { stagePZ.zoom(1 / 1.3); });
+    document.getElementById("fm-fit").addEventListener("click", function () { stagePZ.fit(); });
     document.getElementById("fm-open-dv").addEventListener("click", function () {
       openViewerAt(cur.code + "|" + curLayer);
     });
-    document.getElementById("fm-drawing").addEventListener("click", function () {
-      openViewerAt(cur.code + "|" + curLayer);
+
+    // schedule disclosure (opened from the data rail)
+    var tblWrap = document.getElementById("tbl-wrap");
+    document.getElementById("rail-schedule").addEventListener("click", function () {
+      tblWrap.classList.add("open");
+      tblWrap.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "nearest" });
     });
+    document.getElementById("tbl-close").addEventListener("click", function () {
+      tblWrap.classList.remove("open");
+    });
+
+    // cutting cards
     document.getElementById("cut-open-1").addEventListener("click", function () { openViewerAt("cut1"); });
     document.getElementById("cut-open-2").addEventListener("click", function () { openViewerAt("cut2"); });
     document.getElementById("cut-fig-1").addEventListener("click", function () { openViewerAt("cut1"); });
@@ -293,37 +382,107 @@
       });
     }
 
+    // ---------- nav: mobile menu + scrollspy ----------
+    var nav = document.getElementById("site-nav");
+    var burger = document.getElementById("nav-burger");
+    burger.addEventListener("click", function () {
+      var open = nav.classList.toggle("open");
+      burger.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    var navLinks = document.querySelectorAll("#nav-links a");
+    for (var nl = 0; nl < navLinks.length; nl++) {
+      navLinks[nl].addEventListener("click", function () {
+        nav.classList.remove("open");
+        burger.setAttribute("aria-expanded", "false");
+      });
+    }
+    var spyIds = ["summary", "model", "elevations", "cutting"];
+    var spyTick = false;
+    function scrollSpy() {
+      spyTick = false;
+      var y = window.scrollY + 120;
+      var act = "";
+      for (var si = 0; si < spyIds.length; si++) {
+        var el = document.getElementById(spyIds[si]);
+        if (el && el.offsetTop <= y) act = spyIds[si];
+      }
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) act = spyIds[spyIds.length - 1];
+      for (var sj = 0; sj < navLinks.length; sj++) {
+        navLinks[sj].classList.toggle("active", navLinks[sj].getAttribute("href") === "#" + act);
+      }
+    }
+    window.addEventListener("scroll", function () {
+      if (!spyTick) { spyTick = true; requestAnimationFrame(scrollSpy); }
+    }, { passive: true });
+    scrollSpy();
+
+    // ---------- section reveal (JS-applied so no-JS stays visible) ----------
+    if ("IntersectionObserver" in window && !reducedMotion) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.08 });
+      var secs = document.querySelectorAll(".sec");
+      for (var sv = 0; sv < secs.length; sv++) {
+        var r = secs[sv].getBoundingClientRect();
+        if (r.top > window.innerHeight * 0.9) {
+          secs[sv].classList.add("will-reveal");
+          io.observe(secs[sv]);
+        }
+      }
+    }
+
     // ---------- 3D ----------
     var shell = document.getElementById("viewer-shell");
     var container = document.getElementById("viewer3d");
     var overlay = document.getElementById("v-overlay");
     var viewer = null;
 
+    function applyView(view) {
+      if (!viewer) return;
+      viewer.setLayer("red", view === "all" || view === "red");
+      viewer.setLayer("black", view === "all" || view === "black");
+      viewer.setLayer("clip", view === "all" || view === "clip");
+    }
     function bootViewer() {
       viewer = window.initViewer3D({
         container: container,
         overlay: overlay,
         msgEl: document.getElementById("v-msg"),
         faceCodeOf: faceCodeOfModelKey,
+        faceIdOf: function (key) {
+          for (var i = 0; i < FACES.length; i++) if (FACES[i].model === key) return FACES[i].id;
+          return null;
+        },
         onPickFace: function (code) { selectFace(code, true, true); }
       });
       if (viewer) {
         var c = viewer.counts;
         document.getElementById("v-count").textContent =
           fmt(c.bricks) + " + " + fmt(c.clips) + " = " + fmt(c.bricks + c.clips);
+        var act = document.querySelector("#v-seg button.active");
+        if (act) applyView(act.getAttribute("data-view"));
+        var lb = document.getElementById("v-labels");
+        if (lb) viewer.setLabels(lb.checked);
       }
     }
     // build after full load so the loading state is visible and CDN had its chance
     if (document.readyState === "complete") setTimeout(bootViewer, 60);
     else window.addEventListener("load", function () { setTimeout(bootViewer, 60); });
 
-    var lts = document.querySelectorAll(".lt");
-    for (var k = 0; k < lts.length; k++) {
-      lts[k].addEventListener("click", function () {
-        var on = this.classList.toggle("on");
-        if (viewer) viewer.setLayer(this.getAttribute("data-layer"), on);
+    // segmented layer presets: all / red / black / clip
+    var vsegs = document.querySelectorAll("#v-seg button");
+    for (var vk = 0; vk < vsegs.length; vk++) {
+      vsegs[vk].addEventListener("click", function () {
+        for (var vj = 0; vj < vsegs.length; vj++) vsegs[vj].classList.toggle("active", vsegs[vj] === this);
+        applyView(this.getAttribute("data-view"));
       });
     }
+    var vLabels = document.getElementById("v-labels");
+    if (vLabels) vLabels.addEventListener("change", function () {
+      if (viewer) viewer.setLabels(this.checked);
+    });
     document.getElementById("v-reset").addEventListener("click", function () { if (viewer) viewer.resetView(); });
     document.getElementById("v-all").addEventListener("click", function () { if (viewer) viewer.viewAll(); });
     document.getElementById("v-fs").addEventListener("click", function () {
@@ -331,9 +490,9 @@
       else if (shell.requestFullscreen) shell.requestFullscreen();
     });
     document.addEventListener("fullscreenchange", function () {
-      var fsBtn = document.getElementById("v-fs");
-      fsBtn.setAttribute("data-i18n", document.fullscreenElement ? "btn_fs_exit" : "btn_fs");
-      fsBtn.textContent = T(document.fullscreenElement ? "btn_fs_exit" : "btn_fs");
+      var lab = document.querySelector("#v-fs span");
+      lab.setAttribute("data-i18n", document.fullscreenElement ? "btn_fs_exit" : "btn_fs");
+      lab.textContent = T(document.fullscreenElement ? "btn_fs_exit" : "btn_fs");
       setTimeout(function () { if (viewer) viewer.resize(); }, 80);
     });
 
@@ -341,6 +500,7 @@
     document.addEventListener("langchange", function () {
       buildFaceList();
       renderFace(false);
+      if (viewer && viewer.refreshLabels) viewer.refreshLabels();
     });
 
     handleHash();
