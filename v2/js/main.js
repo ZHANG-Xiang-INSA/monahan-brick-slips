@@ -439,6 +439,22 @@
       });
     }
 
+    // hero material-card exact/+15% toggle (scales the piece counts)
+    var hiSeg = document.querySelectorAll("#hi-seg button");
+    function applyHiMult(mult) {
+      var qs = document.querySelectorAll(".hero-index .hi-q");
+      for (var i = 0; i < qs.length; i++) {
+        var base = Number(qs[i].getAttribute("data-base")) || 0;
+        qs[i].textContent = Math.round(base * mult).toLocaleString("en-US");
+      }
+    }
+    for (var hsi = 0; hsi < hiSeg.length; hsi++) {
+      hiSeg[hsi].addEventListener("click", function () {
+        for (var hj = 0; hj < hiSeg.length; hj++) hiSeg[hj].classList.toggle("active", hiSeg[hj] === this);
+        applyHiMult(parseFloat(this.getAttribute("data-mult")));
+      });
+    }
+
     window.addEventListener("hashchange", handleHash);
 
     // face deep-links should respond even when the hash is already set

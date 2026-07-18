@@ -14,9 +14,9 @@
     hi_red:        { zh: "红砖 Red brick", en: "Red brick 红砖" },
     hi_black:      { zh: "黑砖 Black brick", en: "Black brick 黑砖" },
     hi_steel:      { zh: "钢卡扣 Steel clip", en: "Steel clip 钢卡扣" },
-    hi_total:      { zh: "总砖片", en: "Total slips" },
-    hi_area:       { zh: "铺贴面积", en: "Area" },
-    hi_faces:      { zh: "立面", en: "Elevations" },
+    hi_exact:      { zh: "刚好", en: "Exact" },
+    hi_surplus:    { zh: "+15%", en: "+15%" },
+    hi_note:       { zh: "砖 / 卡扣件数（+15% 为含富余估值）· 详见材料用量", en: "Brick / clip piece counts (+15% = with-surplus estimate) · see Materials" },
 
     // hero
     btn_explore:   { zh: "浏览三维模型", en: "Explore 3D Model" },
