@@ -87,15 +87,16 @@
     cut_title:     { zh: "切割图", en: "Cutting Drawings" },
     cut_sub:       { zh: "1:1 切割排样 · SVG 矢量文件", en: "1:1 cutting layouts · SVG vector files" },
     cut_bricks:    { zh: "砖片切割排样图", en: "Brick Cutting Schedule" },
-    cut_clips:     { zh: "卡扣切割排样图", en: "Steel Clip Cutting Schedule" },
+    cut_clips:     { zh: "卡扣成型与切割图", en: "Guiding-Rail Clip — Forming & Cutting" },
     cut_bricks_sub:{ zh: "46 种砖型 · 1:1 真实轮廓", en: "46 brick types · true 1:1 outlines" },
-    cut_clips_sub: { zh: "10 种卡扣 · 含 40° 斜切", en: "10 clip types · incl. 40° mitres" },
+    cut_clips_sub: { zh: "10 型 · M 形成型钢 · 展开料 118 · 含 40° 斜切", en: "10 types · formed M-section · 118 blank · incl. 40° mitres" },
     ct_types:      { zh: "型号数", en: "Types" },
     ct_scale:      { zh: "比例", en: "Scale" },
+    nts:           { zh: "示意 NTS", en: "NTS" },
     ct_format:     { zh: "格式", en: "Format" },
     btn_open_dwg:  { zh: "打开图纸", en: "Open Drawing" },
     btn_download:  { zh: "下载 SVG", en: "Download SVG" },
-    cut_note:      { zh: "注：58 张单型号切割卡片将于第二阶段提供。", en: "Note: the 58 per-type cutting cards follow in Phase 2." },
+    cut_note:      { zh: "注：卡扣为成型钢导轨（M 形断面：底面 68 + 腿 15 + 内钩唇 10，向上开口 62.5，展开料 118，t=0.25），非平钢片；各型号开孔位置见上图。", en: "Note: clips are formed steel guiding rails (M-section: 68 base + 15 legs + 10 inward lips, 62.5 upward opening, 118 developed blank, t=0.25) — not flat strips. Hole positions per type above." },
 
     // drawing viewer overlay
     dv_reset:      { zh: "重置", en: "Reset" },
@@ -106,7 +107,7 @@
     dv_help:       { zh: "滚轮缩放 · 拖拽平移 · 双击放大 · Esc 关闭", en: "Wheel zoom · drag to pan · double-click zoom · Esc to close" },
 
     // footer
-    foot_doc:      { zh: "砖片排布定位与工程量清单 · 第一阶段网页版", en: "Brick Slip Setting-Out & Quantity Schedule · web edition, phase 1" }
+    foot_doc:      { zh: "砖片排布定位与工程量清单", en: "Brick Slip Setting-Out & Quantity Schedule" }
   };
 
   var lang = "zh";

@@ -89,7 +89,7 @@
       out.push({ code: f.code, name: f.zh + " · " + f.en, sub: T("kind_clip"), src: f.clipSvg, key: f.code + "|clips", w: f.size[0], h: f.size[1] });
     });
     out.push({ code: "CUT-01", name: T("cut_bricks"), sub: T("cut_bricks_sub"), src: "svg/cut_brick_types.svg", key: "cut1", w: 2134, h: 1736 });
-    out.push({ code: "CUT-02", name: T("cut_clips"), sub: T("cut_clips_sub"), src: "svg/cut_clip_types.svg", key: "cut2", w: 1180, h: 942 });
+    out.push({ code: "CUT-02", name: T("cut_clips"), sub: T("cut_clips_sub"), src: "svg/cut_clip_types.svg?b=10", key: "cut2", w: 2000, h: 2218 });
     return out;
   }
   function openViewerAt(key) {

@@ -390,7 +390,7 @@
     var text = (zh ? d.zh : d.en) || d.zh || "";
     // supersample 3x (dpr-aware) so the smaller label stays sharp when scaled down
     var dpr = Math.min(window.devicePixelRatio || 1, 2) * 3;
-    var fs = 12, padX = 8, padY = 5, dotR = 2.5, dotGap = 6;
+    var fs = 11, padX = 7, padY = 4, dotR = 2.2, dotGap = 5;
     var font = '600 ' + fs + 'px -apple-system,"Segoe UI",system-ui,"PingFang SC","Microsoft YaHei",sans-serif';
     var c = document.createElement("canvas");
     var g = c.getContext("2d");
@@ -422,9 +422,9 @@
     if (sprite.material.map && sprite.material.map.dispose) sprite.material.map.dispose();
     sprite.material.map = tex;
     sprite.material.needsUpdate = true;
-    // sizeAttenuation:false => constant screen size; 0.032 ≈ 4.2% of viewport
-    // height (was 0.05 ≈ 6.5% — labels are neat annotations, not big chips)
-    var H = 0.032;
+    // sizeAttenuation:false => constant screen size; 0.024 ≈ 3.1% of viewport
+    // height (was 0.032 — user asked for smaller still: subtle annotations)
+    var H = 0.024;
     sprite.scale.set(H * (c.width / c.height), H, 1);
   }
 
@@ -468,7 +468,11 @@
       var camera = new THREE.PerspectiveCamera(42, 1, 0.05, 500);
 
       var built = buildModelBuffers(window.DATA_model3d);
-      var mat = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide });
+      // PBR materials so surfaces catch the environment: matte ceramic brick,
+      // and genuinely metallic steel for the clips (lit by scene.environment below).
+      var matBrick = new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE.DoubleSide, roughness: 0.87, metalness: 0.0, flatShading: true });
+      var matClip  = new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE.DoubleSide, roughness: 0.33, metalness: 0.92, flatShading: true });
+      if (matBrick.envMapIntensity !== undefined) { matBrick.envMapIntensity = 0.95; matClip.envMapIntensity = 1.25; }
       var groups = { red: new THREE.Group(), black: new THREE.Group(), clip: new THREE.Group() };
       var pickables = [];
       Object.keys(built.buckets).forEach(function (key) {
@@ -477,7 +481,7 @@
         g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(b.positions), 3));
         g.setAttribute("color", new THREE.BufferAttribute(new Float32Array(b.colors), 3));
         g.computeVertexNormals();
-        var mesh = new THREE.Mesh(g, mat);
+        var mesh = new THREE.Mesh(g, b.layer === "clip" ? matClip : matBrick);
         mesh.userData = { faceKey: b.face, layer: b.layer, sub: b.sub || null, faceCode: cfg.faceCodeOf(b.face) };
         mesh.castShadow = b.layer !== "clip";
         groups[b.layer].add(mesh);
@@ -504,13 +508,45 @@
       if (THREE.sRGBEncoding !== undefined) bgTex.encoding = THREE.sRGBEncoding;
       scene.background = bgTex;
 
+      // ----- image-based lighting: procedural studio equirect -> PMREM env -----
+      // This is what makes surfaces look "rendered": soft graded ambient on the
+      // brick, real reflections on the steel. Background stays the dark stage.
+      try {
+        var envC = document.createElement("canvas");
+        envC.width = 1024; envC.height = 512;
+        var eg = envC.getContext("2d");
+        var vgr = eg.createLinearGradient(0, 0, 0, 512);
+        vgr.addColorStop(0.00, "#dde3e9");   // zenith (bright)
+        vgr.addColorStop(0.42, "#9ca6ae");   // upper sky
+        vgr.addColorStop(0.52, "#7c858c");   // horizon
+        vgr.addColorStop(0.75, "#4a453f");   // lower
+        vgr.addColorStop(1.00, "#282623");   // nadir (dark)
+        eg.fillStyle = vgr; eg.fillRect(0, 0, 1024, 512);
+        function envBlob(cx, cy, r, col, a) {
+          var rgr = eg.createRadialGradient(cx, cy, 0, cx, cy, r);
+          rgr.addColorStop(0, "rgba(" + col + "," + a + ")");
+          rgr.addColorStop(1, "rgba(" + col + ",0)");
+          eg.fillStyle = rgr; eg.fillRect(0, 0, 1024, 512);
+        }
+        envBlob(300, 118, 340, "255,241,214", 0.60);   // warm key highlight (top-left)
+        envBlob(770, 150, 300, "203,224,242", 0.38);   // cool fill (top-right)
+        var envTex = new THREE.CanvasTexture(envC);
+        envTex.mapping = THREE.EquirectangularReflectionMapping;
+        if (THREE.sRGBEncoding !== undefined) envTex.encoding = THREE.sRGBEncoding;
+        var pmrem = new THREE.PMREMGenerator(renderer);
+        if (pmrem.compileEquirectangularShader) pmrem.compileEquirectangularShader();
+        var envRT = pmrem.fromEquirectangular(envTex);
+        scene.environment = envRT.texture;
+        envTex.dispose(); pmrem.dispose();
+      } catch (eEnv) { /* IBL is optional; the direct lights below still apply */ }
+
       var fogCol = new THREE.Color(0x171a1f);
       if (fogCol.convertSRGBToLinear) fogCol.convertSRGBToLinear();
       scene.fog = new THREE.Fog(fogCol, diag * 2.6, diag * 7.5);
 
-      var hemi = new THREE.HemisphereLight(0x9db4c6, 0x4c443e, 0.85); // sky / ground bounce
+      var hemi = new THREE.HemisphereLight(0x9db4c6, 0x4c443e, 0.42); // gentle; env carries the ambient now
       scene.add(hemi);
-      var key = new THREE.DirectionalLight(0xffe9d2, 0.9);            // warm key, front-left-top
+      var key = new THREE.DirectionalLight(0xffe9d2, 0.82);           // warm key, front-left-top (drives shadows)
       key.position.set(center.x - diag * 0.55, center.y - diag * 0.8, center.z + diag * 0.9);
       key.target.position.copy(center);
       key.castShadow = true;
@@ -525,7 +561,7 @@
       key.shadow.bias = -0.0004;
       if (key.shadow.normalBias !== undefined) key.shadow.normalBias = 0.03;
       scene.add(key); scene.add(key.target);
-      var fill = new THREE.DirectionalLight(0xbdd2e8, 0.32);          // cool fill from behind-right
+      var fill = new THREE.DirectionalLight(0xbdd2e8, 0.16);          // cool fill from behind-right
       fill.position.set(center.x + diag * 0.7, center.y + diag * 0.45, center.z + diag * 0.3);
       fill.target.position.copy(center);
       scene.add(fill); scene.add(fill.target);
