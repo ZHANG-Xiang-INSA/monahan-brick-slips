@@ -89,7 +89,7 @@
       out.push({ code: f.code, name: f.zh + " · " + f.en, sub: T("kind_clip"), src: f.clipSvg, key: f.code + "|clips", w: f.size[0], h: f.size[1] });
     });
     out.push({ code: "CUT-01", name: T("cut_bricks"), sub: T("cut_bricks_sub"), src: "svg/cut_brick_types.svg", key: "cut1", w: 2134, h: 1736 });
-    out.push({ code: "CUT-02", name: T("cut_clips"), sub: T("cut_clips_sub"), src: "svg/cut_clip_types.svg?b=11", key: "cut2", w: 2000, h: 2218 });
+    out.push({ code: "CUT-02", name: T("cut_clips"), sub: T("cut_clips_sub"), src: "svg/cut_clip_types.svg?b=12", key: "cut2", w: 2000, h: 2218 });
     return out;
   }
   function openViewerAt(key) {
@@ -304,6 +304,18 @@
       return '<td class="num">' + (tot[m] > 0 ? fmtkg(tot[m]) : "—") + "</td>";
     }).join("") + "</tr></tbody></table>";
     document.getElementById("mat-use-host").innerHTML = u;
+    // recipe table (per 47mm brick, kg) — constant; Wuhan-supplied B2 omitted
+    var rc = '<table class="spec"><caption>' + T("mat_recipe_cap") + "</caption><thead><tr><th>" + T("mat_h_mat") + "</th>" +
+      mats.map(function (m) { return '<th class="num">' + m + "</th>"; }).join("") + "</tr></thead><tbody>";
+    rows.forEach(function (r) {
+      if (!r.recipe) return;
+      rc += '<tr><td class="mono">' + r.id + "</td>" + mats.map(function (m) {
+        var v = r.recipe[m] || 0;
+        return '<td class="num">' + (v > 0 ? v.toLocaleString("en-US", { minimumFractionDigits: 6, maximumFractionDigits: 6 }) : "—") + "</td>";
+      }).join("") + "</tr>";
+    });
+    rc += "</tbody></table>";
+    document.getElementById("mat-recipe-host").innerHTML = rc;
   }
 
   // ---------- face rendering ----------

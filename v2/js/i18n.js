@@ -115,6 +115,7 @@
     mat_note:      { zh: "红砖 = B2 + R-Y101-3 + D1；黑砖 = B-3。B2 由 Wuhan 提供（不计材料用量）。配方以每块 47mm 砖计；砖切掉中间 3mm 后成 2 片 22mm 砖片，故做砖数 = 等效整砖 ÷ 2。", en: "Red = B2 + R-Y101-3 + D1; Black = B-3. B2 is supplied by Wuhan (no material calc). Recipe is per 47mm brick; each brick is sliced (3mm kerf) into two 22mm slips, so bricks to make = equivalent-whole ÷ 2." },
     mat_qty_cap:   { zh: "砖数量", en: "Brick quantities" },
     mat_use_cap:   { zh: "材料用量（kg）", en: "Material usage (kg)" },
+    mat_recipe_cap:{ zh: "配方（每块 47mm 砖，kg）", en: "Recipe (per 47mm brick, kg)" },
     mat_h_mat:     { zh: "材料", en: "Material" },
     mat_h_colour:  { zh: "颜色", en: "Colour" },
     mat_h_pct:     { zh: "占比", en: "Share" },
