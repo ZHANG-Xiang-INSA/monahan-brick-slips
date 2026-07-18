@@ -607,3 +607,20 @@ table.spec tr.total td{border-top:1.5px solid var(--ink);border-bottom:0;font-we
 main{counter-reset:secn}
 .sec{counter-increment:secn}
 .sec .sec-head .kicker::before{content:counter(secn,decimal-leading-zero) "  ·  ";color:var(--red-deep)}
+
+/* =====================================================================
+   v6 — revert display type to the original bold sans (the thin Fraunces
+   serif was rejected). Keep the warm palette, hero composition, section
+   numbering + hairline tables. Also lays out the hero card toggle head.
+   ===================================================================== */
+:root{
+  --sans:-apple-system,"Segoe UI",system-ui,Roboto,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --serif:var(--sans);
+}
+.hero-title{font-family:var(--sans);font-weight:650;letter-spacing:-.02em;line-height:1.06}
+.sec-head h2{font-family:var(--sans);font-weight:650;letter-spacing:-.018em}
+.fm-title h3,.dv-name{font-family:var(--sans);font-weight:600;letter-spacing:-.004em}
+.hi-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.hi-head .seg--small{padding:2px}
+.hi-head .seg--small button{padding:5px 10px;font-size:12px}
+.hi-note{font-size:11px;color:var(--ink-2);line-height:1.5;margin-top:-4px}
