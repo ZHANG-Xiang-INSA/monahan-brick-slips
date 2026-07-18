@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="css/site.css?b=12">
+<link rel="stylesheet" href="css/site.css?b=13">
 </head>
 <body>
 
@@ -34,24 +34,40 @@
 </header>
 
 <main id="top">
-  <!-- ================= HERO (text only) ================= -->
+  <!-- ================= HERO (cover composition) ================= -->
   <section class="hero">
     <div class="wrap hero-inner">
-      <span class="hero-accent" aria-hidden="true"></span>
-      <p class="hero-kicker mono"><span class="mask"><span class="mask-i">HA23007 · BRICK SLIP SETTING-OUT</span></span></p>
-      <h1 class="hero-title">
-        <span class="mask"><span class="mask-i">3 Monahan Avenue</span></span>
-        <span class="mask"><span class="mask-i">Purley</span></span>
-      </h1>
-      <p class="hero-doc"><span class="mask"><span class="mask-i">
-        <span class="hd-zh">砖片排布定位与工程量清单</span>
-        <span class="hd-sep" aria-hidden="true">/</span>
-        <span class="hd-en">Brick Slip Setting-Out &amp; Quantity Schedule</span>
-      </span></span></p>
-      <div class="hero-cta">
-        <a class="btn btn-primary" href="#model" data-i18n="btn_explore">浏览三维模型</a>
-        <a class="btn btn-secondary" href="#elevations" data-i18n="btn_elev">查看立面图</a>
+      <div class="hero-lead">
+        <span class="hero-accent" aria-hidden="true"></span>
+        <p class="hero-kicker mono"><span class="mask"><span class="mask-i">HA23007 · BRICK SLIP SETTING-OUT</span></span></p>
+        <h1 class="hero-title">
+          <span class="mask"><span class="mask-i">3 Monahan Avenue</span></span>
+          <span class="mask"><span class="mask-i">Purley</span></span>
+        </h1>
+        <p class="hero-doc"><span class="mask"><span class="mask-i">
+          <span class="hd-zh">砖片排布定位与工程量清单</span>
+          <span class="hd-sep" aria-hidden="true">/</span>
+          <span class="hd-en">Brick Slip Setting-Out &amp; Quantity Schedule</span>
+        </span></span></p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#model" data-i18n="btn_explore">浏览三维模型</a>
+          <a class="btn btn-secondary" href="#elevations" data-i18n="btn_elev">查看立面图</a>
+        </div>
       </div>
+      <aside class="hero-index" aria-label="Project index">
+        <p class="hi-cap mono" data-i18n="hi_mats">材料构成 · MATERIALS</p>
+        <ul class="hi-swatch">
+          <li><span class="sw" style="--sw:#A54132"></span><span class="hi-name" data-i18n="hi_red">红砖 Red brick</span><span class="hi-q mono">5,964</span></li>
+          <li><span class="sw" style="--sw:#242424"></span><span class="hi-name" data-i18n="hi_black">黑砖 Black brick</span><span class="hi-q mono">1,733</span></li>
+          <li><span class="sw" style="--sw:#68737D"></span><span class="hi-name" data-i18n="hi_steel">钢卡扣 Steel clip</span><span class="hi-q mono">2,215</span></li>
+        </ul>
+        <dl class="hi-figs">
+          <div><dt data-i18n="hi_total">总砖片</dt><dd class="mono">7,697</dd></div>
+          <div><dt data-i18n="hi_area">铺贴面积</dt><dd class="mono">128.89<i>m²</i></dd></div>
+          <div><dt data-i18n="hi_faces">立面</dt><dd class="mono">11</dd></div>
+        </dl>
+        <div class="hi-foot mono"><span>HA23007</span><span>PURLEY · LONDON</span><span>1 : 100</span></div>
+      </aside>
     </div>
   </section>
 
@@ -273,7 +289,7 @@
         </article>
         <article class="panel cut-card">
           <div class="cut-fig" id="cut-fig-2">
-            <img src="svg/cut_clip_types.svg?b=12" alt="Clip cutting types sheet" loading="lazy" width="2000" height="2218">
+            <img src="svg/cut_clip_types.svg?b=13" alt="Clip cutting types sheet" loading="lazy" width="2000" height="2218">
           </div>
           <div class="cut-body">
             <p class="cut-code mono">CUT-02</p>
@@ -285,7 +301,7 @@
             </dl>
             <div class="cut-actions">
               <button type="button" class="btn btn-primary" id="cut-open-2" data-i18n="btn_open_dwg">打开图纸</button>
-              <a class="btn btn-secondary" href="svg/cut_clip_types.svg?b=12" download data-i18n="btn_download">下载 SVG</a>
+              <a class="btn btn-secondary" href="svg/cut_clip_types.svg?b=13" download data-i18n="btn_download">下载 SVG</a>
             </div>
           </div>
         </article>
@@ -350,15 +366,15 @@
 </div>
 
 <!-- data (script-src, works on file://) -->
-<script src="data/summary.js?b=12"></script>
-<script src="data/faces.js?b=12"></script>
-<script src="data/model3d_v2.js?b=12"></script>
-<script src="data/materials.js?b=12"></script>
+<script src="data/summary.js?b=13"></script>
+<script src="data/faces.js?b=13"></script>
+<script src="data/model3d_v2.js?b=13"></script>
+<script src="data/materials.js?b=13"></script>
 <!-- three.js r128 classic build; on failure the viewer falls back to the static preview -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="js/i18n.js?b=12"></script>
-<script src="js/drawing.js?b=12"></script>
-<script src="js/viewer3d.js?b=12"></script>
-<script src="js/main.js?b=12"></script>
+<script src="js/i18n.js?b=13"></script>
+<script src="js/drawing.js?b=13"></script>
+<script src="js/viewer3d.js?b=13"></script>
+<script src="js/main.js?b=13"></script>
 </body>
 </html>
