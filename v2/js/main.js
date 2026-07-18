@@ -89,7 +89,7 @@
       out.push({ code: f.code, name: f.zh + " · " + f.en, sub: T("kind_clip"), src: f.clipSvg, key: f.code + "|clips", w: f.size[0], h: f.size[1] });
     });
     out.push({ code: "CUT-01", name: T("cut_bricks"), sub: T("cut_bricks_sub"), src: "svg/cut_brick_types.svg", key: "cut1", w: 2134, h: 1736 });
-    out.push({ code: "CUT-02", name: T("cut_clips"), sub: T("cut_clips_sub"), src: "svg/cut_clip_types.svg?b=10", key: "cut2", w: 2000, h: 2218 });
+    out.push({ code: "CUT-02", name: T("cut_clips"), sub: T("cut_clips_sub"), src: "svg/cut_clip_types.svg?b=11", key: "cut2", w: 2000, h: 2218 });
     return out;
   }
   function openViewerAt(key) {
@@ -258,6 +258,54 @@
     }
   }
 
+  // ---------- materials take-off ----------
+  var matMult = 1;
+  var fmt1 = function (n) { return Number(n).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 1 }); };
+  function fmtkg(v) {
+    var dp = v < 1 ? 3 : (v < 100 ? 2 : 1);
+    return Number(v).toLocaleString("en-US", { minimumFractionDigits: dp, maximumFractionDigits: dp });
+  }
+  function renderMaterials() {
+    var D = window.DATA_materials;
+    if (!D) return;
+    var rows = D.rows, mats = D.mats, mult = matMult;
+    // quantity table
+    var q = '<table class="spec"><caption>' + T("mat_qty_cap") + "</caption><thead><tr>" +
+      "<th>" + T("mat_h_mat") + "</th><th>" + T("mat_h_colour") + '</th><th class="num">' + T("mat_h_pct") + "</th>" +
+      '<th class="num">' + T("mat_h_whole") + '</th><th class="num">' + T("mat_h_half") + "</th>" +
+      '<th class="num">' + T("mat_h_equiv") + '</th><th class="num">' + T("mat_h_bricks") + "</th></tr></thead><tbody>";
+    rows.forEach(function (r) {
+      var whole = Math.round(r.whole * mult), half = Math.round(r.half * mult);
+      var equiv = r.equiv * mult, bricks = equiv / 2;
+      q += '<tr><td class="mono">' + r.id + (r.wuhan ? ' <i style="font-style:normal;font-size:.82em;color:#8a8a8a">(' + T("mat_wuhan") + ")</i>" : "") + "</td>" +
+        "<td>" + (r.colour === "red" ? T("mat_red") : T("mat_black")) + "</td>" +
+        '<td class="num">' + r.pct + "%</td>" +
+        '<td class="num">' + fmt(whole) + '</td><td class="num">' + fmt(half) + "</td>" +
+        '<td class="num">' + fmt1(equiv) + '</td><td class="num">' + fmt1(bricks) + "</td></tr>";
+    });
+    q += "</tbody></table>";
+    document.getElementById("mat-qty-host").innerHTML = q;
+    // usage table
+    var tot = {}; mats.forEach(function (m) { tot[m] = 0; });
+    var u = '<table class="spec"><caption>' + T("mat_use_cap") + "</caption><thead><tr><th>" + T("mat_h_mat") + "</th>" +
+      mats.map(function (m) { return '<th class="num">' + m + "</th>"; }).join("") + "</tr></thead><tbody>";
+    rows.forEach(function (r) {
+      var bricks = r.equiv * mult / 2;
+      if (!r.recipe) {
+        u += '<tr><td class="mono">' + r.id + '</td><td colspan="' + mats.length + '" style="text-align:center;color:#8a8a8a">' + T("mat_wuhan") + "</td></tr>";
+        return;
+      }
+      u += '<tr><td class="mono">' + r.id + "</td>" + mats.map(function (m) {
+        var v = (r.recipe[m] || 0) * bricks; tot[m] += v;
+        return '<td class="num">' + (v > 0 ? fmtkg(v) : "—") + "</td>";
+      }).join("") + "</tr>";
+    });
+    u += '<tr class="total"><td>' + T("mat_total") + "</td>" + mats.map(function (m) {
+      return '<td class="num">' + (tot[m] > 0 ? fmtkg(tot[m]) : "—") + "</td>";
+    }).join("") + "</tr></tbody></table>";
+    document.getElementById("mat-use-host").innerHTML = u;
+  }
+
   // ---------- face rendering ----------
   function renderDrawing(animate) {
     var stage = document.getElementById("fm-drawing");
@@ -368,6 +416,17 @@
     document.getElementById("cut-fig-1").addEventListener("click", function () { openViewerAt("cut1"); });
     document.getElementById("cut-fig-2").addEventListener("click", function () { openViewerAt("cut2"); });
 
+    // materials take-off + exact/+15% toggle
+    renderMaterials();
+    var matSeg = document.querySelectorAll("#mat-seg button");
+    for (var msi = 0; msi < matSeg.length; msi++) {
+      matSeg[msi].addEventListener("click", function () {
+        matMult = parseFloat(this.getAttribute("data-mult"));
+        for (var mj = 0; mj < matSeg.length; mj++) matSeg[mj].classList.toggle("active", matSeg[mj] === this);
+        renderMaterials();
+      });
+    }
+
     window.addEventListener("hashchange", handleHash);
 
     // face deep-links should respond even when the hash is already set
@@ -396,7 +455,7 @@
         burger.setAttribute("aria-expanded", "false");
       });
     }
-    var spyIds = ["summary", "model", "elevations", "cutting"];
+    var spyIds = ["summary", "model", "elevations", "cutting", "materials"];
     var spyTick = false;
     function scrollSpy() {
       spyTick = false;
@@ -500,6 +559,7 @@
     document.addEventListener("langchange", function () {
       buildFaceList();
       renderFace(false);
+      renderMaterials();
       if (viewer && viewer.refreshLabels) viewer.refreshLabels();
     });
 

@@ -9,6 +9,7 @@
     nav_model:     { zh: "三维模型",   en: "3D Model" },
     nav_elev:      { zh: "立面图册",   en: "Elevations" },
     nav_cutting:   { zh: "切割图",     en: "Cutting" },
+    nav_materials: { zh: "材料用量",   en: "Materials" },
 
     // hero
     btn_explore:   { zh: "浏览三维模型", en: "Explore 3D Model" },
@@ -107,6 +108,24 @@
     dv_help:       { zh: "滚轮缩放 · 拖拽平移 · 双击放大 · Esc 关闭", en: "Wheel zoom · drag to pan · double-click zoom · Esc to close" },
 
     // footer
+    mat_title:     { zh: "材料用量", en: "Material Take-off" },
+    mat_sub:       { zh: "按 47mm 小砖配方 · 每块砖切成 2 片砖片 · 可切换刚好用量 / +15% 富余", en: "Per 47mm brick recipe · 1 brick → 2 slips · toggle exact / +15% surplus" },
+    mat_exact:     { zh: "刚好用量", en: "Exact" },
+    mat_surplus:   { zh: "+15% 富余", en: "+15% surplus" },
+    mat_note:      { zh: "红砖 = B2 + R-Y101-3 + D1；黑砖 = B-3。B2 由 Wuhan 提供（不计材料用量）。配方以每块 47mm 砖计；砖切掉中间 3mm 后成 2 片 22mm 砖片，故做砖数 = 等效整砖 ÷ 2。", en: "Red = B2 + R-Y101-3 + D1; Black = B-3. B2 is supplied by Wuhan (no material calc). Recipe is per 47mm brick; each brick is sliced (3mm kerf) into two 22mm slips, so bricks to make = equivalent-whole ÷ 2." },
+    mat_qty_cap:   { zh: "砖数量", en: "Brick quantities" },
+    mat_use_cap:   { zh: "材料用量（kg）", en: "Material usage (kg)" },
+    mat_h_mat:     { zh: "材料", en: "Material" },
+    mat_h_colour:  { zh: "颜色", en: "Colour" },
+    mat_h_pct:     { zh: "占比", en: "Share" },
+    mat_h_whole:   { zh: "整砖", en: "Whole" },
+    mat_h_half:    { zh: "半砖", en: "Half" },
+    mat_h_equiv:   { zh: "等效整砖", en: "Equiv. whole" },
+    mat_h_bricks:  { zh: "做砖 (47mm)", en: "Bricks (47mm)" },
+    mat_red:       { zh: "红", en: "Red" },
+    mat_black:     { zh: "黑", en: "Black" },
+    mat_total:     { zh: "合计采购", en: "Total to buy" },
+    mat_wuhan:     { zh: "Wuhan 供", en: "by Wuhan" },
     foot_doc:      { zh: "砖片排布定位与工程量清单", en: "Brick Slip Setting-Out & Quantity Schedule" }
   };
 
