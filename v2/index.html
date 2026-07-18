@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>3 Monahan Avenue · HA23007 — Brick Slip Setting-Out &amp; Quantity Schedule</title>
 <meta name="description" content="3 Monahan Avenue, Purley (HA23007) — brick slip setting-out and quantity schedule.">
-<link rel="stylesheet" href="css/site.css?b=10">
+<link rel="stylesheet" href="css/site.css?b=11">
 </head>
 <body>
 
@@ -18,6 +18,7 @@
       <a href="#model" data-i18n="nav_model">三维模型</a>
       <a href="#elevations" data-i18n="nav_elev">立面图册</a>
       <a href="#cutting" data-i18n="nav_cutting">切割图</a>
+      <a href="#materials" data-i18n="nav_materials">材料用量</a>
     </nav>
     <div class="lang-toggle" role="group" aria-label="Language">
       <button type="button" data-lang="zh" class="active">中</button>
@@ -269,7 +270,7 @@
         </article>
         <article class="panel cut-card">
           <div class="cut-fig" id="cut-fig-2">
-            <img src="svg/cut_clip_types.svg?b=10" alt="Clip cutting types sheet" loading="lazy" width="2000" height="2218">
+            <img src="svg/cut_clip_types.svg?b=11" alt="Clip cutting types sheet" loading="lazy" width="2000" height="2218">
           </div>
           <div class="cut-body">
             <p class="cut-code mono">CUT-02</p>
@@ -281,12 +282,34 @@
             </dl>
             <div class="cut-actions">
               <button type="button" class="btn btn-primary" id="cut-open-2" data-i18n="btn_open_dwg">打开图纸</button>
-              <a class="btn btn-secondary" href="svg/cut_clip_types.svg?b=10" download data-i18n="btn_download">下载 SVG</a>
+              <a class="btn btn-secondary" href="svg/cut_clip_types.svg?b=11" download data-i18n="btn_download">下载 SVG</a>
             </div>
           </div>
         </article>
       </div>
       <p class="cut-note" data-i18n="cut_note">注：卡扣为成型钢导轨（M 形断面：底面 68 + 腿 15 + 内钩唇 10，向上开口 62.5，展开料 118，t=0.25），非平钢片；各型号开孔位置见上图。</p>
+    </div>
+  </section>
+
+  <!-- ================= MATERIALS ================= -->
+  <section class="sec" id="materials">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="kicker mono">MATERIALS</p>
+        <h2 data-i18n="mat_title">材料用量</h2>
+        <p class="sec-sub" data-i18n="mat_sub">按 47mm 小砖配方 · 每块砖切成 2 片砖片 · 可切换刚好用量 / +15% 富余</p>
+      </header>
+      <div class="fm-tools" style="margin-bottom:16px">
+        <div class="seg" id="mat-seg" role="group" aria-label="Surplus mode">
+          <button type="button" class="active" data-mult="1" data-i18n="mat_exact">刚好用量</button>
+          <button type="button" data-mult="1.15" data-i18n="mat_surplus">+15% 富余</button>
+        </div>
+      </div>
+      <div style="display:grid;gap:16px">
+        <div class="panel tbl-panel"><div class="tbl-scroll" id="mat-qty-host"></div></div>
+        <div class="panel tbl-panel"><div class="tbl-scroll" id="mat-use-host"></div></div>
+      </div>
+      <p class="cut-note" data-i18n="mat_note">红砖 = B2 + R-Y101-3 + D1；黑砖 = B-3。B2 由 Wuhan 提供（不计材料用量）。配方以每块 47mm 砖计；砖切掉中间 3mm 后成 2 片 22mm 砖片，故做砖数 = 等效整砖 ÷ 2。</p>
     </div>
   </section>
 </main>
@@ -323,14 +346,15 @@
 </div>
 
 <!-- data (script-src, works on file://) -->
-<script src="data/summary.js?b=10"></script>
-<script src="data/faces.js?b=10"></script>
-<script src="data/model3d_v2.js?b=10"></script>
+<script src="data/summary.js?b=11"></script>
+<script src="data/faces.js?b=11"></script>
+<script src="data/model3d_v2.js?b=11"></script>
+<script src="data/materials.js?b=11"></script>
 <!-- three.js r128 classic build; on failure the viewer falls back to the static preview -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="js/i18n.js?b=10"></script>
-<script src="js/drawing.js?b=10"></script>
-<script src="js/viewer3d.js?b=10"></script>
-<script src="js/main.js?b=10"></script>
+<script src="js/i18n.js?b=11"></script>
+<script src="js/drawing.js?b=11"></script>
+<script src="js/viewer3d.js?b=11"></script>
+<script src="js/main.js?b=11"></script>
 </body>
 </html>
